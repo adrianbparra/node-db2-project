@@ -58,7 +58,13 @@ carsRouter.put("/:id", (req,res)=>{
 
 carsRouter.delete("/:id", (req,res) => {
     const {id} = req.params;
-    
+
+
+    db("cars").where({id}).del()
+        .then(count => {
+            res.status(200).json({deleteCount: count})
+        })
+        .catch(err => res.status(500).json({errorMessage: "Unable to delete"}))
 })
 
 
